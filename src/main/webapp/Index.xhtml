@@ -7,37 +7,54 @@
 	<title>KMP</title>
 </h:head>
 <h:body>
-<h1 align="center">Implementación KMP</h1>
+	<h1 align="center">Implementación KMP - Buscar coincidencias</h1>
 
 	<div class="card">
-
+		<p:growl id="msjs" showDetail="true" />
 		<h:form enctype="multipart/form-data">
-		<p:toolbar>
+			<p:toolbar>
 				<p:toolbarGroup align="left">
-					
-			<p:fileUpload value="#{indexMB.archivo}" mode="simple"
-				skinSimple="true" /> 
+					<p:fileUpload value="#{indexMB.archivo}" mode="simple"
+						label="Seleccionar Archivo" skinSimple="true"
+						allowTypes="/(\.|\/)(txt)$/"
+						invalidFileMessage="Solo puede cargar archivos .txt" />
 
-			<p:commandButton value="Submit" ajax="false"
-				action="#{indexMB.upload}"
-				styleClass="mt-3 ui-button-outlined block" />
+					<p:commandButton value="Cargar" ajax="false"
+						action="#{indexMB.upload}"
+						update="msjs"
+						styleClass="mt-3 ui-button-outlined block" />
+					<p:commandButton value="Limpiar" ajax="false"
+						action="#{indexMB.limpiar}"
+						styleClass="mt-3 ui-button-outlined block" />
 				</p:toolbarGroup>
-		</p:toolbar>
-		
-			<h:outputText value="Indique la cadena para buscar:   " />
-			<p:inputText placeholder="Buscar" id="strBuscar" value="#{indexMB.strBuscar}" />
-			<p:button icon="pi pi-search"
-				styleClass="rounded-button ui-button-success" />
-			<h3 aling="center">Contenido del archivo:</h3>
+			</p:toolbar>
+
+
+			<p:outputLabel value="Indique la cadena para buscar: "
+				styleClass="col-12 mb-2 md:col-2 md:mb-0" />
+			<p:inputText placeholder="Buscar" id="strBuscar"
+				value="#{indexMB.strBuscar}" />
+			<p:commandButton icon="pi pi-search"
+				styleClass="rounded-button ui-button-success"
+				action="#{indexMB.buscar}"
+				
+				update="msjs" />
+			<br />
+			<p:outputLabel styleClass="col-12 mb-2 md:col-2 md:mb-0"
+				align="center" value="Contenido del archivo:" />
 		</h:form>
 	</div>
 	<div class="card">
-		
-		<p:scrollPanel align="center" mode="native" style="width:1200px;height:200px">
-			<p class="m-0">
-				<h:outputText value="#{indexMB.contenido}" />
-			</p>
+
+		<p:scrollPanel align="center" mode="native"
+			style="width:1200px;height:200px">
+			<h:outputText id="resultado" value="#{indexMB.contenido}"
+				escape="false" />
 		</p:scrollPanel>
+		<p:outputLabel styleClass="col-12 mb-2 md:col-2 md:mb-0"
+			value="Cantidad de coincidencias: " />
+		<p:outputLabel id="coincidencias" value="#{indexMB.coincidencias}"
+			styleClass="col-12 mb-2 md:col-2 md:mb-0" />
 	</div>
 
 </h:body>
